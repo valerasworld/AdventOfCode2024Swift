@@ -1,5 +1,7 @@
 import Foundation
 
+// Day 1 - Historian Hysteria
+
 func findDistancePartOne(_ input: String) -> Int {
     var distance: Int = 0
     
