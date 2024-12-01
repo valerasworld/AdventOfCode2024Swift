@@ -1,5 +1,64 @@
 import Foundation
 
+func findDistancePartOne(_ input: String) -> Int {
+    var distance: Int = 0
+    
+    let stringLines: [String] = input.components(separatedBy: "\n")
+    var leftList: [Int] = []
+    var rightList: [Int] = []
+    
+    for line in stringLines {
+        let stringPair = line.components(separatedBy: "   ")
+        
+        if let intLeft = Int(stringPair[0]),
+           let intRight = Int(stringPair[1]) {
+            leftList.append(intLeft)
+            rightList.append(intRight)
+        }
+    }
+    
+    leftList.sort()
+    rightList.sort()
+    
+    for index in 0..<leftList.count {
+        let localDistance: Int = abs(leftList[index] - rightList[index])
+        distance += localDistance
+    }
+    
+    return distance
+}
+
+findDistancePartOne(Day1().shortInput)
+findDistancePartOne(Day1().longInput)
+
+func findDistancePartTwo(_ input: String) -> Int {
+    var distance: Int = 0
+        
+    let stringLines: [String] = input.components(separatedBy: "\n")
+    var leftList: [Int] = []
+    var rightList: [Int: Int] = [:]
+    
+    for line in stringLines {
+        let stringPair = line.components(separatedBy: "   ")
+        
+        if let intLeft = Int(stringPair[0]),
+            let intRight = Int(stringPair[1]) {
+            leftList.append(intLeft)
+            rightList[intRight, default: 0] += 1
+        }
+    }
+    
+    for number in leftList {
+        let similarity = number * (rightList[number] ?? 0)
+        distance += similarity
+    }
+         
+    return distance
+}
+
+findDistancePartTwo(Day1().shortInput)
+findDistancePartTwo(Day1().longInput)
+
 struct Day1 {
     var shortInput = """
 3   4
@@ -1013,62 +1072,3 @@ struct Day1 {
 13498   75812
 """
 }
-
-func findDistancePartOne(_ input: String) -> Int {
-    var distance: Int = 0
-    
-    let stringLines: [String] = input.components(separatedBy: "\n")
-    var leftList: [Int] = []
-    var rightList: [Int] = []
-    
-    for line in stringLines {
-        let stringPair = line.components(separatedBy: "   ")
-        
-        if let intLeft = Int(stringPair[0]),
-           let intRight = Int(stringPair[1]) {
-            leftList.append(intLeft)
-            rightList.append(intRight)
-        }
-    }
-    
-    leftList.sort()
-    rightList.sort()
-    
-    for index in 0..<leftList.count {
-        let localDistance: Int = abs(leftList[index] - rightList[index])
-        distance += localDistance
-    }
-    
-    return distance
-}
-
-findDistancePartOne(Day1().shortInput)
-findDistancePartOne(Day1().longInput)
-
-func findDistancePartTwo(_ input: String) -> Int {
-    var distance: Int = 0
-        
-    let stringLines: [String] = input.components(separatedBy: "\n")
-    var leftList: [Int] = []
-    var rightList: [Int: Int] = [:]
-    
-    for line in stringLines {
-        let stringPair = line.components(separatedBy: "   ")
-        
-        if let intLeft = Int(stringPair[0]),
-            let intRight = Int(stringPair[1]) {
-            leftList.append(intLeft)
-            rightList[intRight, default: 0] += 1
-        }
-    }
-    
-    for number in leftList {
-        let similarity = number * (rightList[number] ?? 0)
-        distance += similarity
-    }
-         
-    return distance
-}
-
-findDistancePartTwo(Day1().shortInput)
-findDistancePartTwo(Day1().longInput)
